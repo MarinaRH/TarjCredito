@@ -1,36 +1,46 @@
-var ntarjet=parseInt(prompt('ingrese los numeros de la tarjeta'));// preguntamos el n° de tarjeta y aseguramos que solo sea numeros.
-var array = ntarjet.split();                                     //convertimos el string ingresado a array.
-
-//creamos la funcion reverse que revierte los numeros que ingresamos en el array pero en el mismo array.
-var reverse = function (array) {
-   for (var i = 0; i < array.length; i++) {
-     var item = array.pop();
-      array.splice(i, 0, item);}
-return array
-}
-//creamos la funcion para validar los numeros.
-var isValidCard=function(array){
-   
-        for(var i=0; i<array.length; i=i+2) { //si la posicion del digito es par .
-        var sum=array[i]*i+1;                 //multplicamos el digito por la posicion.
-           if(sum[i]>=10){
-               return sum[i]-1;     
+function isValidCard(){
+        
+        do{
+            var num= prompt("Ingrese número")
+          }
+        while (!num  || !/^([0-9])*$/.test(num)); // valida que solo ingrese números y no esta vacio
+        
+        
+        
+        var message='';
+        var sum =0;
+        
+        var  arrayCard=num.split('');            // separar los digitos y colocarlos en un array
+        var arrayReverse = arrayCard.reverse(); // revertir el arreglo
+        
+        for(i=0;i<arrayReverse.length; i++){
+            if(i%2!==0){              // si la posición es impar
+                var elementSelection= parseInt(arrayReverse[i])*2; // multiplicar por 2
+                  if(elementSelection>=10){                         // validar el resultado es >=10
+                    var digitInitial = parseInt(elementSelection/10); // separar los digitos
+                    var digitFinal = elementSelection%10
+                    var elementFinal = digitInitial + digitFinal; // sumar los digitos
+                    arrayReverse[i] = elementFinal; // reemplazar por el valor inicial
+        
+                }
+                else{   // si el valor es menor que 10
+                    var otherElement = parseInt(arrayReverse[i])*2  // multiplicar por 2
+                     arrayReverse[i] = otherElement;              // reemplazar el valor
+        
+        
+                }
             }
-            else{
-               return sum[i];
-            }
-                 }
-    for(var i=1; i<array.length ; i=i+2) {// si la posicion de los digitos es impar solo se toma el digito.
-    return array[i];
-
- }
-  var suma=0;
-   for(var i=0; i<array.length ; i++) {
-           suma=sum[i]+array[i];//sumamos los digitos de las posiciones pares con impares.
-           if(suma%10){ //si la suma de los digitos es divisble por 10 la tarjeta es valida.
-                   return 'valida';
-           }else{ return 'invalida';
-           }
-}
-}
-isValidCard()
+        }
+        
+        for(j=0;j<arrayReverse.length;j++){
+          sum+=parseInt(arrayReverse[j]); // sumar todos los elementos del array
+        }
+        
+          sum%10==0 ? message = "válido" : message = "inválido" // si la suma es multiplo de 10 o no devolver el mensaje especificado
+        
+        
+        return document.write("El número de tarjeta "+ num + " es "+message); // mostrar en la pagina web
+        }
+        
+        
+        isValidCard();
